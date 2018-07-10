@@ -355,5 +355,74 @@ struct Card {
 let threeOfSpades = Card(rank: .three, serverResponse: .timeout())
 let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 
+// Protocol
+
+protocol ExampleProtocol {
+    
+    var simpleDescription: String { get }
+    mutating func adjust()
+}
+
+class SimpleClass: ExampleProtocol {
+    
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69105
+    func adjust() {
+        simpleDescription += " Now 100% adjusted."
+    }
+}
+
+var a = SimpleClass()
+a.adjust()
+
+let aDescription = a.simpleDescription
+print("\(aDescription)")
+
+struct SimpleStructure: ExampleProtocol {
+    
+    var simpleDescription: String = "A simple structure"
+    mutating func adjust() {
+        simpleDescription += " (adjusted)."
+    }
+}
+
+var b = SimpleStructure()
+b.adjust()
+
+let bDescription = b.simpleDescription
+print("\(bDescription)")
+
+extension Int: ExampleProtocol {
+    
+    var simpleDescription: String {
+        return "The number \(self)"
+    }
+    
+    mutating func adjust() {
+        self += 42
+    }
+}
+
+var num: Int = 30
+num.adjust()
+print("\(num.simpleDescription)")
+print("\(7.simpleDescription)")
+
+extension Double: ExampleProtocol {
+    
+    var simpleDescription: String {
+        return "The float number \(self)"
+    }
+    
+    mutating func adjust() {
+        self = abs(self)
+    }
+}
+
+var double: Double = -3.3
+double.adjust()
+
+print("\(double.simpleDescription)")
+print("\(5.5.simpleDescription)")
 
 
